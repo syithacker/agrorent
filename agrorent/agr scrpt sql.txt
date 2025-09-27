@@ -1,0 +1,113 @@
+-- This script creates the AgroRent database, tables, and necessary sample data from scratch.
+-- It is designed to be run once in its entirety.
+
+-- Drop the database if it already exists to ensure a clean setup
+DROP DATABASE IF EXISTS `agrorent`;
+
+-- Create the database
+CREATE DATABASE IF NOT EXISTS `agrorent` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+-- Switch to the newly created database
+USE `agrorent`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+-- This table stores all user information. The password is encrypted.
+--
+CREATE TABLE `users` (
+  `user_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `phone` VARCHAR(20) DEFAULT NULL,
+  `address` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+-- This table defines the possible user roles. It's pre-populated with the three required roles.
+--
+CREATE TABLE `roles` (
+  `role_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `role_name` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`role_id`),
+  UNIQUE KEY `role_name` (`role_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Inserting data for table `roles`
+--
+INSERT INTO `roles` (`role_id`, `role_name`) VALUES
+(1, 'farmer'),
+(2, 'owner'),
+(3, 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_roles`
+-- This is a junction table that links users to their roles.
+-- A user can have multiple entries here, allowing them to be both a farmer and an owner.
+--
+CREATE TABLE `user_roles` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11) NOT NULL,
+  `role_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE CASCADE,
+  FOREIGN KEY (`role_id`) REFERENCES `roles`(`role_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lands`
+-- This table stores all the land listings created by users with the 'owner' role.
+--
+CREATE TABLE `lands` (
+  `land_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `owner_id` INT(11) NOT NULL,
+  `title` VARCHAR(255) NOT NULL,
+  `location` VARCHAR(255) NOT NULL,
+  `size` VARCHAR(100) NOT NULL,
+  `price_per_month` DECIMAL(10,2) NOT NULL,
+  `description` TEXT,
+  `image_url` VARCHAR(255) DEFAULT 'https://images.unsplash.com/photo-1599849581337-33b00f685c2b',
+  `status` ENUM('available','booked') NOT NULL DEFAULT 'available',
+  PRIMARY KEY (`land_id`),
+  FOREIGN KEY (`owner_id`) REFERENCES `users`(`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- =======================================================
+-- DUMMY DATA AND PRESET USER ACCOUNT
+-- This section adds a ready-to-use account and sample land data.
+-- =======================================================
+
+-- 1. Create a dummy user who will be an Owner and a Farmer.
+-- The password for this user is 'password123'
+INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `phone`, `address`) VALUES
+(1, 'Atharva Dhuri', 'admin@agr.com', '$2y$10$GLjY5y./h8418L1s72osN.2zE7s9V8y34qY94fbsIICGzF.9.sQeC', '1234567890', '123 Green Valley, Farmville');
+
+-- 2. Assign the 'owner' and 'farmer' roles to John Doe (user_id = 1)
+INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES (1, 1), (1, 2);
+
+-- 3. Add some dummy land listings owned by John Doe (owner_id = 1).
+INSERT INTO `lands` (`owner_id`, `title`, `location`, `size`, `price_per_month`, `description`, `image_url`) VALUES
+(1, 'kudal agro', 'maharashtra', '10 Acres', '15000.00', 'Fertile land perfect for rice farming.', 'https://images.unsplash.com/photo-1470058315132-0b23f03b664d'),
+(1, 'sawantwadi agro', 'Riverbend, wadi', '5 Acres', '9500.00', 'Rich soil ideal for vegetables and seasonal crops. Located near the main river for easy water access.', 'https://images.unsplash.com/photo-15003820174ǧ8-9049fed747ef'),
+(1, 'dhuri farm', 'Greenwood, vengurla', '20 Acres', '22000.00', 'Expansive plot suitable for large-scale farming. Includes a small barn for storage. Soil tested and approved.', 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff');
+
+-- =======================================================
+-- ADMIN CREATION NOTE
+-- To make a user an admin, you must run an SQL query manually for security.
+-- Example to make John Doe (user_id 1) an admin:
+-- INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES (1, 3);
+-- =======================================================
+
+COMMIT;

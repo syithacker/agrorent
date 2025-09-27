@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - AgroRent</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <a href="index.html" class="navbar-brand" style="display: block; text-align: center; margin-bottom: 20px;">🌱 AgroRent</a>
+        <h2>Create Your Account</h2>
+        <form id="registerForm">
+            <div class="form-group"><input type="text" id="name" placeholder="Full Name" required></div>
+            <div class="form-group"><input type="email" id="email" placeholder="Email Address" required></div>
+            <div class="form-group"><input type="password" id="password" placeholder="Password" required></div>
+            <div class="form-group"><input type="tel" id="phone" placeholder="Phone Number" required></div>
+            <div class="form-group"><input type="text" id="address" placeholder="Address" required></div>
+            <div class="form-group role-selection">
+                <label>I want to register as a:</label>
+                <div class="role-options">
+                    <label><input type="checkbox" name="roles" value="farmer"> Farmer</label>
+                    <label><input type="checkbox" name="roles" value="owner"> Land Owner</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+        </form>
+        <div id="message"></div>
+        <p class="auth-switch">Already have an account? <a href="login.html">Login</a></p>
+    </div>
+    <script src="js/register.js"></script>
+</body>
+</html>
