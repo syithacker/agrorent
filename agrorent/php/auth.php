@@ -14,31 +14,43 @@ switch ($action) {
 function registerUser() {
     global $conn;
     $data = json_decode(file_get_contents('php://input'), true);
-    $name = $data['name']; $email = $data['email']; $password = $data['password']; $phone = $data['phone']; $address = $data['address']; $roles = $data['roles'];
     
+    // Get user data from form (no roles)
+    $name = $data['name']; 
+    $email = $data['email']; 
+    $password = $data['password']; 
+    $phone = $data['phone']; 
+    $address = $data['address'];
+    
+    // Check if email already exists
     $stmt = $conn->prepare("SELECT user_id FROM users WHERE email = ?");
-    $stmt->bind_param("s", $email); $stmt->execute(); $stmt->store_result();
-    if ($stmt->num_rows > 0) { echo json_encode(['status' => 'error', 'message' => 'Email already exists.']); $stmt->close(); return; }
+    $stmt->bind_param("s", $email); 
+    $stmt->execute(); 
+    $stmt->store_result();
+    if ($stmt->num_rows > 0) { 
+        echo json_encode(['status' => 'error', 'message' => 'Email already exists.']); 
+        $stmt->close(); 
+        return; 
+    }
     $stmt->close();
     
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+    
+    // Insert into users table
     $stmt = $conn->prepare("INSERT INTO users (name, email, password, phone, address) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("sssss", $name, $email, $hashed_password, $phone, $address);
     
     if ($stmt->execute()) {
-        $user_id = $stmt->insert_id; $stmt->close();
+        $user_id = $stmt->insert_id; 
+        $stmt->close();
         
-        $stmt_roles = $conn->prepare("SELECT role_id FROM roles WHERE role_name = ?");
-        $stmt_insert = $conn->prepare("INSERT INTO user_roles (user_id, role_id) VALUES (?, ?)");
+        // --- MODIFICATION: Automatically assign the 'farmer' role (role_id = 1) ---
+        $stmt_insert_role = $conn->prepare("INSERT INTO user_roles (user_id, role_id) VALUES (?, 1)");
+        $stmt_insert_role->bind_param("i", $user_id);
+        $stmt_insert_role->execute();
+        $stmt_insert_role->close();
+        // --- END OF MODIFICATION ---
         
-        foreach ($roles as $role_name) {
-            $stmt_roles->bind_param("s", $role_name); $stmt_roles->execute(); $result = $stmt_roles->get_result();
-            if ($row = $result->fetch_assoc()) { 
-                $stmt_insert->bind_param("ii", $user_id, $row['role_id']); 
-                $stmt_insert->execute(); 
-            }
-        }
-        $stmt_roles->close(); $stmt_insert->close();
         echo json_encode(['status' => 'success', 'message' => 'Registration successful.']);
     } else { 
         echo json_encode(['status' => 'error', 'message' => 'Registration failed.']); 

@@ -1,50 +1,59 @@
 /*
-  Theme: AgroRent - Earthy & Clean
-  A professional and modern theme with an agricultural feel.
-  Perfect for a high-quality student project.
+  Theme: AgroRent - Harvest Gold
+  A professional, modern, and trustworthy agriculture theme.
 */
 
-/* --- 1. Variables & Global Styles --- */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+/* --- 1. FONT IMPORT & GLOBAL SETUP --- */
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Roboto:wght@400;700&display=swap');
 
 :root {
-    --theme-green: #4A5D23; /* A deep, earthy green */
-    --theme-brown: #6B4F4F; /* A solid brown for text */
-    --theme-beige: #F5EEDC; /* A light beige for accents */
-    --theme-bg: #FAF9F6;   /* An off-white background */
-    --theme-border: #D8D2C4;
-    --theme-white: #FFFFFF;
-    --font-primary: 'Montserrat', sans-serif;
+    --primary-green: #3A5A40;      /* Deep, earthy forest green */
+    --accent-gold: #E9A825;        /* Warm, sunny harvest gold */
+    --background-light: #F8F7F2;  /* Light, warm parchment background */
+    --surface-white: #FFFFFF;       /* For cards and interactive elements */
+    --text-dark: #3D405B;          /* A dark, slightly desaturated color for text */
+    --text-light: #6c757d;        /* For subtitles and secondary text */
+    --border-light: #E0E0E0;
+    --shadow-soft: 0 5px 15px rgba(0,0,0,0.07);
+    --shadow-hover: 0 8px 25px rgba(0,0,0,0.1);
+    --font-heading: 'Lora', serif;
+    --font-body: 'Roboto', sans-serif;
 }
 
 body {
-    font-family: var(--font-primary);
+    font-family: var(--font-body);
     margin: 0;
-    background-color: var(--theme-bg);
-    color: var(--theme-brown);
-    line-height: 1.6;
+    background-color: var(--background-light);
+    color: var(--text-dark);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+    max-width: 1280px;
+    margin: 3rem auto;
+    padding: 0 2rem;
 }
 
-/* --- 2. Navigation Bar --- */
+/* --- 2. NAVIGATION BAR --- */
 .navbar {
-    background-color: var(--theme-white);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    padding: 1rem 2rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-light);
+    padding: 1rem 2.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .navbar-brand {
-    font-size: 1.6em;
-    font-weight: 700;
-    color: var(--theme-green);
+    font-family: var(--font-heading);
+    font-size: 1.7em;
+    font-weight: 600;
+    color: var(--primary-green);
     text-decoration: none;
 }
 
@@ -54,220 +63,348 @@ body {
 }
 
 #welcomeMessage {
-    margin-right: 1rem;
-    color: var(--theme-brown);
+    margin-right: 1.5rem;
+    color: var(--text-dark);
 }
 
-/* --- 3. Buttons --- */
+/* --- 3. BUTTONS --- */
 .btn {
     display: inline-block;
-    padding: 0.6rem 1.2rem;
-    border-radius: 4px;
-    border: 1px solid var(--theme-green);
+    padding: 0.75rem 1.6rem;
+    border-radius: 6px;
+    border: 2px solid transparent;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 700;
+    font-family: var(--font-body);
     text-align: center;
-    transition: all 0.2s ease-in-out;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
 }
 
 .btn-primary {
-    background-color: var(--theme-green);
-    color: var(--theme-white);
+    background-color: var(--accent-gold);
+    border-color: var(--accent-gold);
+    color: var(--surface-white);
 }
 
 .btn-primary:hover {
-    background-color: #3e4d1e; /* Darker green */
-    border-color: #3e4d1e;
+    background-color: #d49820; /* Darker gold */
+    border-color: #d49820;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-soft);
 }
 
 .btn-secondary {
     background-color: transparent;
-    color: var(--theme-green);
+    color: var(--primary-green);
+    border-color: var(--primary-green);
 }
 
 .btn-secondary:hover {
-    background-color: var(--theme-beige);
+    background-color: var(--primary-green);
+    color: var(--surface-white);
 }
 
-.btn-sm { 
-    padding: 0.25rem 0.6rem; 
-    font-size: 0.8em; 
+.btn-danger {
+    background-color: transparent;
+    color: #991B1B;
+    border-color: #991B1B;
 }
 
-/* --- 4. Forms & Authentication --- */
+.btn-danger:hover {
+    background-color: #991B1B;
+    color: var(--surface-white);
+}
+
+.btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75em;
+}
+
+/* --- 4. FORMS & AUTHENTICATION --- */
+.auth-body {
+    background-color: var(--background-light);
+}
+
 .auth-container {
-    max-width: 420px;
-    margin: 4rem auto;
-    padding: 2.5rem;
-    background-color: var(--theme-white);
-    border-radius: 4px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    max-width: 450px;
+    margin: 5rem auto;
+    padding: 3rem;
+    background-color: var(--surface-white);
+    border-radius: 8px;
+    box-shadow: var(--shadow-hover);
 }
 
 .auth-container h2 {
+    font-family: var(--font-heading);
     text-align: center;
     margin-top: 0;
     margin-bottom: 2rem;
-    color: var(--theme-green);
+    color: var(--primary-green);
+}
+
+.form-group, .add-land-form .form-group {
+    margin-bottom: 1.5rem;
 }
 
 .form-group input,
 .add-land-form input,
 .add-land-form textarea {
     width: 100%;
-    padding: 0.8rem;
-    border: 1px solid var(--theme-border);
-    border-radius: 4px;
+    padding: 0.9rem;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
     box-sizing: border-box;
-    font-family: var(--font-primary);
+    font-family: var(--font-body);
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-/* --- 5. Message Banners --- */
-#message, #addLandMessage {
-    margin-top: 1rem;
-    padding: 0.75rem;
-    border-radius: 4px;
-    display: none;
-    border: 1px solid transparent;
+.form-group input:focus,
+.add-land-form input:focus,
+.add-land-form textarea:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 0 3px rgba(233, 168, 37, 0.2);
 }
-.message-success { background-color: #d1e7dd; border-color: #badbcc; color: #0f5132; }
-.message-error { background-color: #f8d7da; border-color: #f5c2c7; color: #842029; }
 
+.auth-switch {
+    text-align: center;
+    margin-top: 1.5rem;
+}
 
-/* --- 6. Dashboard & Content --- */
+.auth-switch a {
+    color: var(--primary-green);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+/* --- 5. DASHBOARD & CARDS --- */
 .dashboard-title {
     text-align: center;
-    margin-bottom: 2.5rem;
-    font-weight: 700;
-    color: var(--theme-brown);
+    margin-bottom: 3rem;
+    font-family: var(--font-heading);
+    font-size: 2.8em;
 }
 
 .dashboard-section {
-    margin-bottom: 3rem;
+    margin-bottom: 3.5rem;
 }
 
 .dashboard-section h2 {
-    font-size: 1.5em;
-    font-weight: 600;
-    color: var(--theme-green);
-    border-bottom: 2px solid var(--theme-beige);
-    padding-bottom: 0.5rem;
-    margin-bottom: 1.5rem;
+    font-family: var(--font-heading);
+    font-size: 2em;
+    color: var(--primary-green);
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+/* Card Animation */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .card-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
 }
 
 .land-card {
-    background-color: var(--theme-white);
-    border: 1px solid var(--theme-border);
-    border-radius: 4px;
+    background-color: var(--surface-white);
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    transition: box-shadow 0.3s, transform 0.3s;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    animation: fadeInUp 0.5s ease-out forwards;
 }
+
+.land-card:nth-child(1) { animation-delay: 0.1s; }
+.land-card:nth-child(2) { animation-delay: 0.2s; }
+.land-card:nth-child(3) { animation-delay: 0.3s; }
 
 .land-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
 }
 
-.land-card.booked { opacity: 0.7; }
+.land-card.booked { opacity: 0.6; pointer-events: none; }
 
 .land-card img {
     width: 100%;
-    height: 180px;
+    height: 200px;
     object-fit: cover;
 }
 
-.card-content { padding: 1rem; }
-.card-content h3 { margin-top: 0; margin-bottom: 0.5rem; }
+.card-content { padding: 1.5rem; flex-grow: 1; }
+.card-content h3 { font-family: var(--font-heading); margin-top: 0; font-size: 1.4em; }
 .card-footer {
-    padding: 1rem;
-    background-color: var(--theme-bg);
-    border-top: 1px solid var(--theme-border);
+    padding: 1rem 1.5rem;
+    background-color: var(--background-light);
+    border-top: 1px solid var(--border-light);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.price { font-weight: 700; font-size: 1.1em; color: var(--theme-green); }
+.price { font-weight: 700; font-size: 1.3em; color: var(--primary-green); }
 
-
-/* --- 7. Data Tables (Booking & Admin) --- */
+/* --- 6. DATA TABLES & BADGES --- */
 .data-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1rem;
-    background-color: var(--theme-white);
-    border: 1px solid var(--theme-border);
-    border-radius: 4px;
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
     overflow: hidden;
+    box-shadow: var(--shadow-soft);
 }
 .data-table th, .data-table td {
-    border-bottom: 1px solid var(--theme-border);
-    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--border-light);
+    padding: 1rem 1.2rem;
     text-align: left;
+    vertical-align: middle;
 }
 .data-table th {
-    background-color: var(--theme-bg);
-    font-weight: 600;
+    background-color: var(--background-light);
+    font-weight: 700;
 }
 .data-table tbody tr:last-child td { border-bottom: none; }
+.data-table tbody tr:hover { background-color: #f7f9f2; }
 
-.status-badge {
-    padding: 0.25em 0.6em;
-    border-radius: 10rem;
-    font-weight: 600;
+.status-badge, .role-tag {
+    display: inline-block;
+    padding: 0.25em 0.8em;
+    border-radius: 50px;
+    font-weight: 700;
     font-size: 0.75em;
     text-transform: capitalize;
-}
-.status-pending { background-color: #fff3cd; color: #664d03; }
-.status-approved { background-color: #d1e7dd; color: #0f5132; }
-.status-rejected { background-color: #f8d7da; color: #842029; }
-
-
-/* --- 8. Admin Panel --- */
-.stat-cards-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 1.5rem;
-}
-
-.stat-card {
-    background-color: var(--theme-white);
-    border: 1px solid var(--theme-border);
-    border-left: 5px solid var(--theme-green);
-    border-radius: 4px;
-    padding: 1.5rem;
-    display: flex;
-    align-items: center;
-}
-.stat-card .icon-container { display: none; } /* Simpler look without icons */
-.stat-info .stat-title { color: var(--theme-brown); font-size: 0.9em; opacity: 0.8; }
-.stat-info .stat-value { font-size: 1.8em; font-weight: 700; }
-
-.role-tag {
-    display: inline-block;
-    padding: 0.25em 0.6em;
-    font-size: 0.75em;
-    font-weight: 600;
-    border-radius: 4px;
     margin-right: 0.5rem;
 }
-.role-tag.owner { background-color: #cfe2ff; color: #084298; }
-.role-tag.farmer { background-color: #d1e7dd; color: #0f5132; }
+.status-pending { background-color: #FEF3C7; color: #92400E; }
+.status-approved { background-color: #D1FAE5; color: #065F46; }
+.status-rejected { background-color: #FEE2E2; color: #991B1B; }
+.role-tag.owner { background-color: #DBEAFE; color: #1E40AF; }
+.role-tag.farmer { background-color: #D1FAE5; color: #065F46; }
 
+/* --- 7. ADMIN PANEL --- */
+.stat-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+.stat-card {
+    background-color: var(--surface-white);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-soft);
+}
+.stat-info .stat-title { color: var(--text-light); }
+.stat-info .stat-value { font-size: 2.2em; font-weight: 700; color: var(--primary-green); }
 
-/* --- 9. Utility --- */
+/* --- 8. UTILITY, PROMPTS, & NOTIFICATIONS --- */
 .role-view { display: none; }
 .add-land-form {
-    background-color: var(--theme-white);
-    border: 1px solid var(--theme-border);
-    border-radius: 4px;
-    padding: 1.5rem;
+    background-color: var(--surface-white);
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border-light);
 }
-.add-land-form .form-row { display: flex; gap: 1rem; margin-bottom: 1rem; }
-.add-land-form textarea { min-height: 100px; resize: vertical; margin-bottom: 1rem; }
+.add-land-form .form-row { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; }
+.add-land-form textarea { min-height: 120px; resize: vertical; margin-bottom: 1rem; }
+
+.become-owner-prompt {
+    background-color: var(--surface-white);
+    border: 1px solid var(--border-light);
+    border-left: 5px solid var(--accent-gold);
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+}
+.become-owner-prompt h2 { border-bottom: none; margin-bottom: 0.5rem; }
+
+#notification-area {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    z-index: 1001;
+    width: 380px;
+}
+.notification {
+    position: relative;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    color: var(--surface-white);
+    box-shadow: var(--shadow-medium);
+    animation: slideInRight 0.5s ease-out forwards;
+}
+.notification.is-success { background: linear-gradient(45deg, #66BB6A, var(--primary-green)); }
+.notification.is-danger { background: linear-gradient(45deg, #EF5350, #B71C1C); }
+.notification-title { font-family: var(--font-heading); margin-top: 0; }
+.delete-notification {
+    position: absolute;
+    top: 5px; right: 10px;
+    background: none; border: none;
+    color: var(--surface-white); font-size: 1.5rem;
+    cursor: pointer; opacity: 0.7;
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(110%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Card Status Badge */
+.land-card { position: relative; }
+.card-status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+}
+.status-pending_approval { background-color: #FEF3C7; color: #92400E; }
+.status-rejected { background-color: #FEE2E2; color: #991B1B; }
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+.modal-content {
+    background-color: var(--surface-white);
+    margin: 10% auto;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: var(--shadow-hover);
+}
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Card actions */
+.card-actions {
+    display: flex;
+    gap: 0.5rem;
+}
